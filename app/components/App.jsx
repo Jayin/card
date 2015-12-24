@@ -5,6 +5,7 @@ let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import InputDialog from './InputDialog.jsx'
 import DesignSelect from './DesignSelect.jsx'
+import CanvasRender from '../libs/CanvasRender'
 
 
 export default class App extends React.Component {
@@ -21,34 +22,10 @@ export default class App extends React.Component {
         }
     }
 
-    renderComponentInput(inputs){
-        let self = this
-        if(inputs){
-            inputs.forEach(function(input) {
-                self.ctx.save()
-                self.ctx.font = input.fontSize + " serif"
-                self.ctx.fillStyle = input.fillStyle
-                self.ctx.fillText(input.value, input.x, input.y);
-                self.ctx.restore()
-            })
-        }
-
-    }
-
-    renderComponent(component){
-        var image = component.image
-        this.ctx.drawImage(image, 0, 0, image.width, image.height, component.x || 0, component.y || 0, image.width, image.height);
-
-        if (component.inputs && component.inputs.length > 0) {
-            //有文字则显示
-            this.renderComponentInput(component.inputs)
-        }
-    }
-
     updateDesign(){
         console.log('updateDesign==>'+this.state.current);
-        this.renderComponent(this.state.Resource[this.state.current])
-        this.renderComponent(this.state.Resource['water_mark'])
+        CanvasRender.renderComponent(this.ctx, this.state.Resource[this.state.current])
+        CanvasRender.renderComponent(this.ctx, this.state.Resource['water_mark'])
     }
 
     componentDidMount () {
