@@ -62,9 +62,8 @@ export default class App extends React.Component {
             showInputdialog: false,
             Resource: res
         }, function(){
-
+            this.updateDesign()
         })
-        this.updateDesign()
     }
     /**
      * 更换了设计
