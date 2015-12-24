@@ -4,6 +4,7 @@ import $ from 'jquery';
 let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import InputDialog from './InputDialog.jsx'
+import DesignSelect from './DesignSelect.jsx'
 
 
 export default class App extends React.Component {
@@ -14,7 +15,8 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             current: '1',
-            showInputdialog: true,
+            showInputdialog: false,
+            showDesignSelect: true,
             Resource: DESIGN.Resource
         }
     }
@@ -44,6 +46,7 @@ export default class App extends React.Component {
     }
 
     updateDesign(){
+        console.log('updateDesign==>'+this.state.current);
         this.renderComponent(this.state.Resource[this.state.current])
         this.renderComponent(this.state.Resource['water_mark'])
     }
@@ -68,7 +71,8 @@ export default class App extends React.Component {
 
     clickSwitch(){
         this.setState({
-            showInputdialog: true
+            showInputdialog: false,
+            showDesignSelect: true
         })
     }
     //确认生成新的证书
@@ -85,6 +89,23 @@ export default class App extends React.Component {
         })
         this.updateDesign()
     }
+    /**
+     * 更换了设计
+     */
+    onDesignChange(newDesignItem){
+        let res = this.state.Resource
+        console.log('change the design item==>');
+        console.log(newDesignItem);
+        this.setState({
+            current: newDesignItem.id,
+            showInputdialog: true,
+            showDesignSelect: false
+        }, function(){
+            this.updateDesign()
+        })
+
+
+    }
 
     render () {
         let res = this.state.Resource
@@ -98,7 +119,10 @@ export default class App extends React.Component {
                 <button onClick={this.clickSwitch.bind(this)} style={{background: 'transparent',width: '50%',height: '10%',position: 'absolute',right: '0',top: '50%',border: 'none'}}></button>
                 <InputDialog display={this.state.showInputdialog}
                             inputs={inputs}
-                            onInputChange={this.onInputChange.bind(this)}></InputDialog>
+                            onInputChange={this.onInputChange.bind(this)}>
+                </InputDialog>
+                <DesignSelect Resource={this.state.Resource} display={this.state.showDesignSelect} onDesignChange={this.onDesignChange.bind(this)}>
+                </DesignSelect>
             </div>
 
         );

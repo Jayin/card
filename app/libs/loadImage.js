@@ -19,7 +19,7 @@ module.exports = function(Resource, imageCount, cb){
             var img2 = new Image();
             img2.onload = countLoadedImage.bind(this, img2)
             Resource[key]['previewImage'] = img2
-            img2.src = Resource[key]['url']
+            img2.src = Resource[key]['preview']
         }
     }
 }
