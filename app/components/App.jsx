@@ -2,7 +2,7 @@ import React from 'react';
 require('./App.css');
 import $ from 'jquery';
 let loadImage = require('../libs/loadImage')
-let CONF = require('../conf')
+let DESIGN = require('../design')
 import InputDialog from './InputDialog.jsx'
 
 
@@ -13,9 +13,9 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: 'tieba',
+            current: '1',
             showInputdialog: true,
-            Resource: CONF.Resource
+            Resource: DESIGN.Resource
         }
     }
 
@@ -53,23 +53,12 @@ export default class App extends React.Component {
         self.canvas = $('canvas')[0]
         self.ctx = self.canvas.getContext('2d')
 
-        loadImage(CONF.Resource, CONF.ResourceImageUrls.length, function(newResource) {
+        loadImage(DESIGN.Resource, DESIGN.allImages.length, function(newResource) {
             console.log('image load finish!');
             self.setState({
                 Resource: newResource
             })
 
-            // var renderComponent = function(component) {
-            //
-            //     var image = component.image
-            //     ctx.drawImage(image, 0, 0, image.width, image.height, component.x || 0, component.y || 0, image.width, image.height);
-            //
-            //     if (component.inputs && component.inputs.length > 0) {
-            //         //有文字则显示
-            //         renderComponentInput(component.inputs)
-            //     }
-            //
-            // }
             console.log('cdm');
             console.log(self.state.Resource);
             self.updateDesign()
