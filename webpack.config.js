@@ -20,8 +20,7 @@ module.exports = {
     // ],
     entry:{
         'main': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/main.jsx')],
-        'index': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/index.js')],
-        'share': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/share.js')],
+        'share': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/share.jsx')],
     },
     output: {
         path: __dirname + '/build',
@@ -38,7 +37,7 @@ module.exports = {
             include: path.resolve(__dirname, 'app'),
             exclude: /node_modules/,
             loader: 'babel-loader'
-        }, ]
+        },    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),

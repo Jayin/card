@@ -8,8 +8,7 @@ module.exports = {
   devtool: 'cheap-source-map',
   entry: {
       'main':path.resolve(__dirname, 'app/main.jsx'),
-      'index':path.resolve(__dirname, 'app/index.js'),
-      'share':path.resolve(__dirname, 'app/share.js')
+      'share':path.resolve(__dirname, 'app/share.jsx')
   },
   output: {
     path: __dirname + '/build',
@@ -20,6 +19,7 @@ module.exports = {
     loaders:[
       { test: /\.css$/, include: path.resolve(__dirname, 'app'), loader: 'style-loader!css-loader' },
       { test: /\.js[x]?$/, include: path.resolve(__dirname, 'app'), exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   },
   plugins: [

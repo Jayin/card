@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "babel-runtime": "~6.2.0",
+    "file-loader": "^0.8.5",
     "jquery": "^2.1.4",
     "normalize.css": "^3.0.3",
     "react": "~0.14.3",
-    "react-dom": "~0.14.3"
+    "react-dom": "~0.14.3",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "webpack": "~1.12.9",
