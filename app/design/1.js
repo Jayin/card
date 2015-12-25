@@ -2,8 +2,8 @@ module.exports = {
     "id": "1",
     "title": "证书-贴吧-学霸",
     "type": "design",
-    "url": "/images/design/1.jpg",
-    "preview": "/images/design/1.preview.jpg",
+    "url": "./images/design/1.jpg",
+    "preview": "./images/design/1.preview.jpg",
     "x":"0",
     "y":"0", //该图片显示的位置
     "inputs": [{

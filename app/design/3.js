@@ -2,8 +2,8 @@ module.exports = {
     "id": "3",
     "title": "证书-朋友圈学霸",
     "type": "design",
-    "url": "/images/design/3.jpg",
-    "preview": "/images/design/3.preview.jpg",
+    "url": "./images/design/3.jpg",
+    "preview": "./images/design/3.preview.jpg",
     "x": "0",
     "y": "0", //该图片显示的位置
     "inputs": [{

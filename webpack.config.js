@@ -37,7 +37,11 @@ module.exports = {
             include: path.resolve(__dirname, 'app'),
             exclude: /node_modules/,
             loader: 'babel-loader'
-        },    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }]
+        },
+        {
+             test: /\.(png|jpg)$/,
+             loader: 'url-loader?limit=0'
+         }]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),

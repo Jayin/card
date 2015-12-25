@@ -2,8 +2,8 @@ module.exports = {
     "id": "2",
     "title": "证书-装逼",
     "type": "design",
-    "url": "/images/design/2.jpg",
-    "preview": "/images/design/2.preview.jpg",
+    "url": "./images/design/2.jpg",
+    "preview": "./images/design/2.preview.jpg",
     "x": "0",
     "y": "0", //该图片显示的位置
     "inputs": [{
