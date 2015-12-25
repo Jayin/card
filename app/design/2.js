@@ -9,8 +9,8 @@ module.exports = {
     "inputs": [{
         "key": "请输入姓名",
         "value": "",
-        "x": "220",
-        "y": "283",
+        "x": "185",
+        "y": "260",
         "fillStyle": "#000000",
         "fontSize": "48px"
 
