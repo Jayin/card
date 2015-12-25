@@ -6,7 +6,10 @@ let DESIGN = require('../design')
 import InputDialog from './InputDialog.jsx'
 import DesignSelect from './DesignSelect.jsx'
 import CanvasRender from '../libs/CanvasRender'
+import AV from 'avoscloud-sdk'
 
+//参数依次为 AppId, AppKey
+AV.initialize('Q6RJwINXFrWH20wvODUvxzXE-gzGzoHsz', 'jg9rHTU3IVMgXWyjpdhv4Xun');
 
 export default class App extends React.Component {
     canvas: null
