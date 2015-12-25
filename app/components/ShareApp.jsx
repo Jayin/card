@@ -4,8 +4,14 @@ require('./ShareApp.css');
 let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import urlparser from '../libs/urlparser'
-
 import CanvasRender from '../libs/CanvasRender'
+import AV from 'avoscloud-sdk'
+
+//参数依次为 AppId, AppKey
+AV.initialize('Q6RJwINXFrWH20wvODUvxzXE-gzGzoHsz', 'jg9rHTU3IVMgXWyjpdhv4Xun');
+// 创建AV.Object子类.
+// 该语句应该只声明一次
+var CampaignDesign = AV.Object.extend('CampaignDesign');
 
 export default class App extends React.Component {
     canvas: null
@@ -37,24 +43,40 @@ export default class App extends React.Component {
 
                 var urlobj = urlparser(window.location.href)
                 console.log(urlobj);
-                //先异步获取数据
-                let data = {
-                    id: "xxx",
-                    designId: "3",
-                    inputs: [
-                        '唐杰英'
-                    ]
-                }
-                //不需要的可以不加载
-                let res = DESIGN.Resource
-                for(let i=0;i<res[data.designId].inputs.length;i++){
-                    res[data.designId].inputs[i].value = data.inputs[i]
-                }
-                self.setState({
-                    current: data.designId, //update the design
-                    Resource: res
-                }, function(){
-                    self.updateDesign()
+
+                var query = new AV.Query(CampaignDesign);
+                query.get(urlobj.search.id, {
+                  success: function(campaignDesign) {
+                      console.log('query data:');
+                      console.log(campaignDesign);
+                    // 成功获得实例
+                    // var content = post.get('content');
+                    // var username = post.get('pubUser');
+                    // var pubTimestamp = post.get('pubTimestamp');
+                    //先异步获取数据
+                    let data = {
+                        id: urlobj.search.id,
+                        designId: campaignDesign.get('designId'),
+                        inputs: campaignDesign.get('inputs')
+                    }
+                    console.log(data);
+                    //不需要的可以不加载
+                    let res = DESIGN.Resource
+                    for(let i=0;i<res[data.designId].inputs.length;i++){
+                        res[data.designId].inputs[i].value = data.inputs[i]
+                    }
+                    self.setState({
+                        current: data.designId, //update the design
+                        Resource: res
+                    }, function(){
+                        self.updateDesign()
+                    })
+
+                  },
+                  error: function(error) {
+                    // 失败了.
+                    alert('获取数据失败')
+                  }
                 })
 
 
