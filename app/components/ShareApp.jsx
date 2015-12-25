@@ -11,7 +11,8 @@ import AV from 'avoscloud-sdk'
 AV.initialize('Q6RJwINXFrWH20wvODUvxzXE-gzGzoHsz', 'jg9rHTU3IVMgXWyjpdhv4Xun');
 // 创建AV.Object子类.
 // 该语句应该只声明一次
-var CampaignDesign = AV.Object.extend('CampaignDesign');
+let CampaignDesign = AV.Object.extend('CampaignDesign')
+let CampaignDesignLove = AV.Object.extend('CampaignDesignLove')
 
 export default class App extends React.Component {
     canvas: null
@@ -20,7 +21,8 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             current: '1',
-            Resource: DESIGN.Resource
+            Resource: DESIGN.Resource,
+            campaignDesignLoveCount: 0
         }
     }
 
@@ -85,9 +87,61 @@ export default class App extends React.Component {
             console.log('cdm');
             console.log(self.state.Resource);
             self.updateDesign()
-
         })
 
+        this.fetchCampaignDesignLoveCount()
+    }
+
+    fetchCampaignDesignLoveCount(){
+        let self = this
+        let urlobj = urlparser(window.location.href)
+        let query = new AV.Query(CampaignDesignLove);
+        query.equalTo('campaignDesignId', urlobj.search.id);
+        query.count({
+          success: function(count) {
+            // 成功了
+            console.log('有' + count + ' 条赞');
+            self.setState({
+                campaignDesignLoveCount: count
+            })
+          },
+          error: function(error) {
+            // 失败了
+          }
+        });
+    }
+
+    clickDesignLove(){
+        let self = this
+        let urlobj = urlparser(window.location.href)
+        let campaignDesignLove = CampaignDesignLove.new({
+            campaignDesignId: urlobj.search.id
+        })
+
+        campaignDesignLove.save(null, {
+          success: function(campaignDesignLove) {
+            // 成功保存之后，执行其他逻辑.
+            console.log('New object created with objectId: ' + campaignDesignLove.id);
+            self.fetchCampaignDesignLoveCount()
+          },
+          error: function(post, error) {
+            // 失败之后执行其他逻辑
+            // error 是 AV.Error 的实例，包含有错误码和描述信息.
+            console.log('Failed to create new object, with error message: ' + error.message);
+          }
+        });
+    }
+
+    clickGoDesign(){
+        window.location = 'index.html'
+    }
+
+    clickGoArticle(){
+        alert('你点击了文章')
+    }
+
+    clickAD() {
+        window.location = 'http://fenxiangbei.com/'
     }
 
     render () {
@@ -96,6 +150,13 @@ export default class App extends React.Component {
                 <canvas id="canvas" width="1044" height="740">
                     Sorry, your browser doesn't support the &lt;canvas&gt; element.
                 </canvas>
+                <button style={{background: 'transparent',width: '20%',height: '7%',position: 'absolute',left: '22%',top: '50%',border: 'none'}}>
+                    <div style={{color: 'white', fontSize: '1.2rem'}}>{this.state.campaignDesignLoveCount}</div>
+                </button>
+                <button onClick={this.clickDesignLove.bind(this)} style={{background: 'transparent',width: '50%',height: '7%',position: 'absolute',right: '0',top: '50%',border: 'none'}}></button>
+                <button onClick={this.clickGoDesign.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '60%',border: 'none'}}></button>
+                <button onClick={this.clickGoArticle.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '71%',border: 'none'}}></button>
+                <button onClick={this.clickAD.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',right: '0',bottom: '0%',border: 'none'}}></button>
             </div>
 
         );
