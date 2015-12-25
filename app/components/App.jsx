@@ -95,7 +95,7 @@ export default class App extends React.Component {
 
         var campaignDesign = CampaignDesign.new({
             designId: item.id, //设计id
-            inupts: item.inputs.map(function(input){ //输入新
+            inputs: item.inputs.map(function(input){ //输入新
                 return input.value
             })
         })
