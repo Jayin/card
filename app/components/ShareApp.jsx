@@ -5,6 +5,7 @@ let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import urlparser from '../libs/urlparser'
 import CanvasRender from '../libs/CanvasRender'
+import FollowDialog from './FollowDialog.jsx'
 import AV from 'avoscloud-sdk'
 
 //参数依次为 AppId, AppKey
@@ -22,7 +23,8 @@ export default class App extends React.Component {
         this.state = {
             current: '1',
             Resource: DESIGN.Resource,
-            campaignDesignLoveCount: 0
+            campaignDesignLoveCount: 0,
+            showFollowDialog: false
         }
     }
 
@@ -137,7 +139,9 @@ export default class App extends React.Component {
     }
 
     clickGoArticle(){
-        alert('你点击了文章')
+        this.setState({
+            showFollowDialog: true
+        })
     }
 
     clickAD() {
@@ -157,6 +161,7 @@ export default class App extends React.Component {
                 <button onClick={this.clickGoDesign.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '60%',border: 'none'}}></button>
                 <button onClick={this.clickGoArticle.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '71%',border: 'none'}}></button>
                 <img  src="../images/ad.jpg" onClick={this.clickAD.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',right: '0',bottom: '0%',border: 'none'}}></img>
+                <FollowDialog display={this.state.showFollowDialog}></FollowDialog>
             </div>
 
         );
