@@ -10,6 +10,9 @@ import AV from 'avoscloud-sdk'
 
 //参数依次为 AppId, AppKey
 AV.initialize('Q6RJwINXFrWH20wvODUvxzXE-gzGzoHsz', 'jg9rHTU3IVMgXWyjpdhv4Xun');
+// 创建AV.Object子类.
+// 该语句应该只声明一次
+var CampaignDesign = AV.Object.extend('CampaignDesign');
 
 export default class App extends React.Component {
     canvas: null
@@ -86,6 +89,31 @@ export default class App extends React.Component {
 
     }
 
+    clickShare(){
+        console.log("clickShare")
+        let item =  this.state.Resource[this.state.current]
+
+        var campaignDesign = CampaignDesign.new({
+            designId: item.id, //设计id
+            inupts: item.inputs.map(function(input){ //输入新
+                return input.value
+            })
+        })
+
+        campaignDesign.save(null, {
+          success: function(campaignDesign) {
+            // 成功保存之后，执行其他逻辑.
+            console.log('New object created with objectId: ' + campaignDesign.id);
+            window.location = 'share.html?id='+campaignDesign.id
+          },
+          error: function(campaignDesign, error) {
+            // 失败之后执行其他逻辑
+            // error 是 AV.Error 的实例，包含有错误码和描述信息.
+            console.log('Failed to create new object, with error message: ' + error.message);
+          }
+        })
+    }
+
     render () {
         let res = this.state.Resource
         let inputs = res && res[this.state.current] && res[this.state.current].inputs? res[this.state.current].inputs:[]
@@ -96,6 +124,7 @@ export default class App extends React.Component {
                     Sorry, your browser doesn't support the &lt;canvas&gt; element.
                 </canvas>
                 <button onClick={this.clickSwitch.bind(this)} style={{background: 'transparent',width: '50%',height: '10%',position: 'absolute',right: '0',top: '50%',border: 'none'}}></button>
+                <button onClick={this.clickShare.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '62%',border: 'none'}}></button>
                 <InputDialog display={this.state.showInputdialog}
                             inputs={inputs}
                             onInputChange={this.onInputChange.bind(this)}>
