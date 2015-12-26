@@ -49,7 +49,7 @@ class InputDialog extends React.Component {
         var Inputs = this.state.inputs.map(function(input, index){
             return (
                 <input key={index} placeholder={input.key} onChange={self.onInputItemChange.bind(self, index)} value={input.value}
-                    style={{height: '17%',border: '1px solid grey',borderRadius: '10px',textAlign: 'center'}}></input>
+                    style={{height: '17%',border: '1px solid grey',borderRadius: '10px',textAlign: 'center',fontSize: '1.3rem'}}></input>
             )
         })
 
@@ -60,7 +60,7 @@ class InputDialog extends React.Component {
                         {Inputs}
                         <button
                             onClick={this.clickCreate.bind(this)}
-                            style={{background: '#f45e45',color: 'white',borderRadius: '10px',padding: '11px', marginTop: '1rem'}}>
+                            style={{background: '#f45e45',color: 'white',borderRadius: '10px',padding: '11px', marginTop: '1rem',fontSize: '1.3rem'}}>
                             生成我的逼格证书
                         </button>
                     </div>
