@@ -11,8 +11,8 @@ module.exports = {
       'share':path.resolve(__dirname, 'app/share.jsx')
   },
   output: {
-    path: __dirname + '/build',
-    publicPath: '/',
+    path: __dirname + '/build/card',
+    publicPath: '/card/',
     filename: '[name].bundle.js'
   },
   module: {

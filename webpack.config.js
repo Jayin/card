@@ -11,13 +11,6 @@ module.exports = {
         contentBase: './app',
         port: 8080
     },
-    // entry: [
-    //     'webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',
-    //     // path.resolve(__dirname, 'app/main.jsx'),
-    //     path.resolve(__dirname, 'app/index.js'),
-    //     path.resolve(__dirname, 'app/share.js')
-    //
-    // ],
     entry:{
         'main': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/main.jsx')],
         'share': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/share.jsx')],

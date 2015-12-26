@@ -1,6 +1,5 @@
 deploy:
-	mv ./build ./campaigns
-	scp -r ./campaigns root@h5.fenxiangbei.com:/var/www/html
-	rm -rf ./campaigns
+	scp -r ./build/card root@h5.fenxiangbei.com:/var/www/html/campaigns/
+	rm -rf ./build/card
 
 .PHONY: deploy
