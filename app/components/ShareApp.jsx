@@ -32,6 +32,7 @@ export default class App extends React.Component {
         console.log('updateDesign==>' + this.state.current);
         CanvasRender.renderComponent(this.ctx, this.state.Resource[this.state.current])
         CanvasRender.renderComponent(this.ctx, this.state.Resource['water_mark'])
+        $('#preview-image')[0].src = this.canvas.toDataURL('image/png')
     }
 
     componentDidMount () {
@@ -151,7 +152,8 @@ export default class App extends React.Component {
     render () {
         return(
             <div>
-                <canvas id="canvas" width="1044" height="740">
+                <img id="preview-image"/>
+                <canvas id="canvas" width="1044" height="740" style={{display: 'none'}}>
                     Sorry, your browser doesn't support the &lt;canvas&gt; element.
                 </canvas>
                 <button style={{background: 'transparent',width: '20%',height: '7%',position: 'absolute',left: '22%',top: '50%',border: 'none'}}>
