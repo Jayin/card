@@ -12,7 +12,7 @@ module.exports = {
   },
   output: {
     path: __dirname + '/build/card',
-    publicPath: '/card/',
+    publicPath: '/card/', //CDN
     filename: '[name].bundle.js'
   },
   module: {
