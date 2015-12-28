@@ -5,7 +5,8 @@ let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import urlparser from '../libs/urlparser'
 import CanvasRender from '../libs/CanvasRender'
-import FollowDialog from './FollowDialog.jsx'
+import InputDialog from './InputDialog.jsx'
+import DesignSelect from './DesignSelect.jsx'
 import AV from 'avoscloud-sdk'
 
 //参数依次为 AppId, AppKey
@@ -22,9 +23,10 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             current: '1',
+            showInputdialog: false,
+            showDesignSelect: false,
             Resource: DESIGN.Resource,
-            campaignDesignLoveCount: 0,
-            showFollowDialog: false
+            campaignDesignLoveCount: 0
         }
     }
 
@@ -114,6 +116,71 @@ export default class App extends React.Component {
         });
     }
 
+    clickSwitch(){
+        this.setState({
+            showInputdialog: false,
+            showDesignSelect: true
+        })
+    }
+    //确认生成新的证书
+    onInputChange(inputs){
+        console.log('App:onInputChange:');
+        console.log(inputs);
+        let res = this.state.Resource
+        res[this.state.current].inputs = inputs
+        this.setState({
+            showInputdialog: false,
+            Resource: res
+        }, function(){
+            this.updateDesign()
+        })
+
+        this.createCampaignDesign()
+    }
+
+    createCampaignDesign(){
+        console.log("createCampaignDesign")
+        let item =  this.state.Resource[this.state.current]
+
+        var campaignDesign = CampaignDesign.new({
+            designId: item.id, //设计id
+            inputs: item.inputs.map(function(input){ //输入新
+                return input.value
+            })
+        })
+
+        campaignDesign.save(null, {
+          success: function(campaignDesign) {
+            // 成功保存之后，执行其他逻辑.
+            console.log('New object created with objectId: ' + campaignDesign.id);
+            window.location = 'share.html?id='+campaignDesign.id
+          },
+          error: function(campaignDesign, error) {
+            // 失败之后执行其他逻辑
+            // error 是 AV.Error 的实例，包含有错误码和描述信息.
+            console.log('Failed to create new object, with error message: ' + error.message);
+          }
+        })
+    }
+
+    /**
+     * 更换了设计
+     */
+    onDesignChange(newDesignItem){
+        let res = this.state.Resource
+        console.log('change the design item==>');
+        console.log(newDesignItem);
+        this.setState({
+            current: newDesignItem.id,
+            showInputdialog: true,
+            showDesignSelect: false
+        }, function(){
+            this.updateDesign()
+        })
+
+
+    }
+
     clickDesignLove(){
         let self = this
         let urlobj = urlparser(window.location.href)
@@ -136,13 +203,17 @@ export default class App extends React.Component {
     }
 
     clickGoDesign(){
-        window.location = 'index.html'
+        this.setState({
+            showInputdialog: false,
+            showDesignSelect: true
+        })
     }
 
     clickGoArticle(){
-        this.setState({
-            showFollowDialog: true
-        })
+        // this.setState({
+        //     showFollowDialog: true
+        // })
+        //Link to article.html
     }
 
     clickAD() {
@@ -150,6 +221,8 @@ export default class App extends React.Component {
     }
 
     render () {
+        let res = this.state.Resource
+        let inputs = res && res[this.state.current] && res[this.state.current].inputs? res[this.state.current].inputs:[]
         return(
             <div>
                 <img id="preview-image"/>
@@ -162,8 +235,14 @@ export default class App extends React.Component {
                 <button onClick={this.clickDesignLove.bind(this)} style={{background: 'transparent',width: '100%',height: '7%',position: 'absolute',left: '0',top: '50%',border: 'none'}}></button>
                 <button onClick={this.clickGoDesign.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '60%',border: 'none'}}></button>
                 <button onClick={this.clickGoArticle.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '71%',border: 'none'}}></button>
+                <InputDialog display={this.state.showInputdialog}
+                            inputs={inputs}
+                            onInputChange={this.onInputChange.bind(this)}>
+                </InputDialog>
+                <DesignSelect Resource={this.state.Resource} display={this.state.showDesignSelect} onDesignChange={this.onDesignChange.bind(this)}>
+                </DesignSelect>
                 <img  src="http://h5.fenxiangbei.com/card/images/ad.jpg" onClick={this.clickAD.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',right: '0',bottom: '0%',border: 'none'}}></img>
-                <FollowDialog display={this.state.showFollowDialog}></FollowDialog>
+
             </div>
 
         );
