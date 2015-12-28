@@ -224,10 +224,7 @@ export default class App extends React.Component {
     }
 
     clickGoArticle(){
-        // this.setState({
-        //     showFollowDialog: true
-        // })
-        //Link to article.html
+        window.location.href = 'http://mp.weixin.qq.com/s?__biz=MzA4MTc1Mjc0MA==&mid=400816795&idx=1&sn=fc96d16859775366f6ce91b0923298f1#rd'
     }
 
     clickAD() {
