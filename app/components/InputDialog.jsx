@@ -49,18 +49,18 @@ class InputDialog extends React.Component {
         var Inputs = this.state.inputs.map(function(input, index){
             return (
                 <input key={index} placeholder={input.key} onChange={self.onInputItemChange.bind(self, index)} value={input.value}
-                    style={{height: '33px',border: '1px solid grey',borderRadius: '10px',textAlign: 'center',fontSize: '1.3rem'}}></input>
+                    style={{height: '33px',border: '1px solid #999999',borderRadius: '10px',textAlign: 'center',fontSize: '1.3rem',width: '60%'}}></input>
             )
         })
 
         return (
             <div style={{position: 'absolute',top: '0',right: '0',bottom: '0',left: '0',background: 'rgba(0, 0, 0, 0.62)', display: (this.state.display?'block':'none')}}>
-                    <div style={{width: '53%',maxHeight: '41%',position: 'absolute',left: '21%',top: '30%',background: 'white',
-                        textAlign:'center', paddingTop:'4px', paddingBottom:'4px',overflow: 'scroll'}}>
+                    <div style={{width: '63%',maxHeight: '41%',position: 'absolute',left: '21%',top: '30%',background: 'white',
+                        textAlign:'center', paddingTop:'4px', paddingBottom:'4px',overflow: 'scroll',borderRadius: '5px'}}>
                         {Inputs}
                         <button
                             onClick={this.clickCreate.bind(this)}
-                            style={{background: '#f45e45',color: 'white',borderRadius: '10px',padding: '11px', marginTop: '1rem',fontSize: '1.3rem'}}>
+                            style={{background: '#f45e45',color: 'white',borderRadius: '10px',padding: '11px', marginTop: '1rem',fontSize: '1.3rem',width: '60%'}}>
                             生成我的逼格证书
                         </button>
                     </div>

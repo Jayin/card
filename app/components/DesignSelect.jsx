@@ -44,8 +44,8 @@ class DesignSelect extends React.Component {
 
         return (
             <div style={{position: 'absolute',top: '0',right: '0',bottom: '0',left: '0',background: 'rgba(0, 0, 0, 0.62)', display: (this.state.display?'block':'none')}}>
-                    <div style={{width: '53%',height: '41%',position: 'absolute',left: '21%',top: '30%',background: 'white',
-                        textAlign:'center', padding:'8px',overflow: 'scroll'}}>
+                    <div style={{width: '63%',height: '41%',position: 'absolute',left: '16%',top: '30%',background: 'white',
+                        textAlign:'center', padding:'8px',overflow: 'scroll', borderRadius: '5px'}}>
                         {PreviewImages}
                     </div>
             </div>
