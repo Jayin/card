@@ -10,9 +10,9 @@ module.exports = {
         "key": "请输入姓名",
         "value": "",
         "x": "200",
-        "y": "260",
+        "y": "270",
         "fillStyle": "#000000",
-        "fontSize": "28px"
+        "fontSize": "28"
 
     }]
 }
