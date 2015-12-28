@@ -159,7 +159,7 @@ export default class App extends React.Component {
                 <button style={{background: 'transparent',width: '20%',height: '7%',position: 'absolute',left: '22%',top: '50%',border: 'none'}}>
                     <div style={{color: 'white', fontSize: '1.2rem'}}>{this.state.campaignDesignLoveCount}</div>
                 </button>
-                <button onClick={this.clickDesignLove.bind(this)} style={{background: 'transparent',width: '50%',height: '7%',position: 'absolute',right: '0',top: '50%',border: 'none'}}></button>
+                <button onClick={this.clickDesignLove.bind(this)} style={{background: 'transparent',width: '100%',height: '7%',position: 'absolute',left: '0',top: '50%',border: 'none'}}></button>
                 <button onClick={this.clickGoDesign.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '60%',border: 'none'}}></button>
                 <button onClick={this.clickGoArticle.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',left: '0',top: '71%',border: 'none'}}></button>
                 <img  src="http://h5.fenxiangbei.com/card/images/ad.jpg" onClick={this.clickAD.bind(this)} style={{background: 'transparent',width: '100%',height: '10%',position: 'absolute',right: '0',bottom: '0%',border: 'none'}}></img>
