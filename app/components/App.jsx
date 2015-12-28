@@ -17,10 +17,10 @@ let CampaignDesign = AV.Object.extend('CampaignDesign')
 let CampaignDesignLove = AV.Object.extend('CampaignDesignLove')
 
 export default class App extends React.Component {
-    canvas: null
-    ctx: null
     constructor (props) {
         super(props);
+        this.canvas = null
+        this.ctx = null
         this.state = {
             current: '1',
             showInputdialog: false,
