@@ -8,7 +8,7 @@ module.exports = {
   devtool: 'cheap-source-map',
   entry: {
       'main':path.resolve(__dirname, 'app/main.jsx'),
-      'share':path.resolve(__dirname, 'app/share.jsx')
+    //   'share':path.resolve(__dirname, 'app/share.jsx')
   },
   output: {
     path: __dirname + '/build/card',

@@ -13,7 +13,7 @@ module.exports = {
     },
     entry:{
         'main': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/main.jsx')],
-        'share': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/share.jsx')],
+        // 'share': ['webpack/hot/dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname, 'app/share.jsx')],
     },
     output: {
         path: __dirname + '/build',
