@@ -50,7 +50,11 @@ export default class App extends React.Component {
 
                 var urlobj = urlparser(window.location.href)
                 console.log(urlobj);
-
+                //没有design
+                if(!urlobj.search.id){
+                    console.log("no search.id...");
+                    return
+                }
                 var query = new AV.Query(CampaignDesign);
                 query.get(urlobj.search.id, {
                   success: function(campaignDesign) {
@@ -100,6 +104,11 @@ export default class App extends React.Component {
     fetchCampaignDesignLoveCount(){
         let self = this
         let urlobj = urlparser(window.location.href)
+        //没有design
+        if(!urlobj.search.id){
+            console.log("no search.id...");
+            return
+        }
         let query = new AV.Query(CampaignDesignLove);
         query.equalTo('campaignDesignId', urlobj.search.id);
         query.count({
@@ -184,6 +193,11 @@ export default class App extends React.Component {
     clickDesignLove(){
         let self = this
         let urlobj = urlparser(window.location.href)
+        //没有design
+        if(!urlobj.search.id){
+            console.log("no search.id...");
+            return
+        }
         let campaignDesignLove = CampaignDesignLove.new({
             campaignDesignId: urlobj.search.id
         })
