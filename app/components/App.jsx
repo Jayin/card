@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 require('./App.css');
-require('css!normalize.css')
+require('./normalize.css')
 let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import urlparser from '../libs/urlparser'
