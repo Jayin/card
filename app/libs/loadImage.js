@@ -10,10 +10,10 @@ module.exports = function(Resource, imageCount, cb){
     }
     for(var key in Resource){
         //设计图
-        var img1 = new Image();
-        img1.onload = countLoadedImage.bind(this, img1)
-        Resource[key]['image'] = img1
-        img1.src = Resource[key]['url']
+        // var img1 = new Image();
+        // img1.onload = countLoadedImage.bind(this, img1)
+        // Resource[key]['image'] = img1
+        // img1.src = Resource[key]['url']
         //预览选项图
         if(Resource[key]['preview']){
             var img2 = new Image();

@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 require('./App.css');
+require('css!normalize.css')
 let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
 import urlparser from '../libs/urlparser'
@@ -26,15 +27,16 @@ export default class App extends React.Component {
             showInputdialog: false,
             showDesignSelect: false,
             Resource: DESIGN.Resource,
-            campaignDesignLoveCount: 0
+            campaignDesignLoveCount: 0,
+            previewImageUrl: 'http://cardcdn1.fenxiangbei.com/designs/1.jpg'
         }
     }
 
     updateDesign () {
         console.log('updateDesign==>' + this.state.current);
-        CanvasRender.renderDesign(this.canvas, this.state.Resource[this.state.current])
-        CanvasRender.renderComonent(this.canvas, this.state.Resource['water_mark'])
-        $('#preview-image')[0].src = this.canvas.toDataURL('image/png')
+        // CanvasRender.renderDesign(this.canvas, this.state.Resource[this.state.current])
+        // CanvasRender.renderComonent(this.canvas, this.state.Resource['water_mark'])
+        // $('#preview-image')[0].src = this.canvas.toDataURL('image/png')
     }
 
     componentDidMount () {
@@ -42,7 +44,7 @@ export default class App extends React.Component {
         self.canvas = $('canvas')[0]
         self.ctx = self.canvas.getContext('2d')
 
-        loadImage(DESIGN.Resource, DESIGN.allImages.length, function(newResource) {
+        loadImage(DESIGN.Resource, DESIGN.allRequiredImages.length, function(newResource) {
             console.log('image load finish!');
             self.setState({
                 Resource: newResource
@@ -55,40 +57,46 @@ export default class App extends React.Component {
                     console.log("no search.id...");
                     return
                 }
-                var query = new AV.Query(CampaignDesign);
-                query.get(urlobj.search.id, {
-                  success: function(campaignDesign) {
-                      console.log('query data:');
-                      console.log(campaignDesign);
-                    // 成功获得实例
-                    // var content = post.get('content');
-                    // var username = post.get('pubUser');
-                    // var pubTimestamp = post.get('pubTimestamp');
-                    //先异步获取数据
-                    let data = {
-                        id: urlobj.search.id,
-                        designId: campaignDesign.get('designId'),
-                        inputs: campaignDesign.get('inputs')
-                    }
-                    console.log(data);
-                    //不需要的可以不加载
-                    let res = DESIGN.Resource
-                    for(let i=0;i<res[data.designId].inputs.length;i++){
-                        res[data.designId].inputs[i].value = data.inputs[i]
-                    }
-                    self.setState({
-                        current: data.designId, //update the design
-                        Resource: res
-                    }, function(){
-                        self.updateDesign()
-                    })
-
-                  },
-                  error: function(error) {
-                    // 失败了.
-                    alert('获取数据失败')
-                  }
+                //替换设计
+                // $('#preview-image')[0].src  = `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.jpg`
+                self.setState({
+                    previewImageUrl: `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.jpg`
                 })
+                //获取设计并渲染
+                // var query = new AV.Query(CampaignDesign);
+                // query.get(urlobj.search.id, {
+                //   success: function(campaignDesign) {
+                //       console.log('query data:');
+                //       console.log(campaignDesign);
+                //     // 成功获得实例
+                //     // var content = post.get('content');
+                //     // var username = post.get('pubUser');
+                //     // var pubTimestamp = post.get('pubTimestamp');
+                //     //先异步获取数据
+                //     let data = {
+                //         id: urlobj.search.id,
+                //         designId: campaignDesign.get('designId'),
+                //         inputs: campaignDesign.get('inputs')
+                //     }
+                //     console.log(data);
+                //     //不需要的可以不加载
+                //     let res = DESIGN.Resource
+                //     for(let i=0;i<res[data.designId].inputs.length;i++){
+                //         res[data.designId].inputs[i].value = data.inputs[i]
+                //     }
+                //     self.setState({
+                //         current: data.designId, //update the design
+                //         Resource: res
+                //     }, function(){
+                //         self.updateDesign()
+                //     })
+
+                //   },
+                //   error: function(error) {
+                //     // 失败了.
+                //     alert('获取数据失败')
+                //   }
+                // })
 
 
             })
@@ -96,6 +104,7 @@ export default class App extends React.Component {
             console.log('cdm');
             console.log(self.state.Resource);
             self.updateDesign()
+            // $('#preview-image')[0].src = self.canvas.toDataURL('image/png')
         })
 
         this.fetchCampaignDesignLoveCount()
@@ -142,16 +151,16 @@ export default class App extends React.Component {
             Resource: res
         }, function(){
             this.updateDesign()
+            this.createCampaignDesign()
         })
-
-        this.createCampaignDesign()
+        
     }
 
     createCampaignDesign(){
         console.log("createCampaignDesign")
         let item =  this.state.Resource[this.state.current]
 
-        var campaignDesign = CampaignDesign.new({
+        let campaignDesign = CampaignDesign.new({
             designId: item.id, //设计id
             inputs: item.inputs.map(function(input){ //输入新
                 return input.value
@@ -162,7 +171,19 @@ export default class App extends React.Component {
           success: function(campaignDesign) {
             // 成功保存之后，执行其他逻辑.
             console.log('New object created with objectId: ' + campaignDesign.id);
-            window.location = 'index.html?id='+campaignDesign.id
+            // window.location = 'index.html?id='+campaignDesign.id
+            $.ajax({
+                method: 'GET',
+                url: 'http://api.fenxiangbei.com:3000/?CampaignDesignId='+campaignDesign.id,
+                success: function(res){
+                    console.log('已创建图片:' + campaignDesign.id);
+                    window.location.href = 'index.html?id='+campaignDesign.id
+                },
+                error: function(){
+                    alert('系统繁忙，请稍后再试!')
+                }
+                
+            })
           },
           error: function(campaignDesign, error) {
             // 失败之后执行其他逻辑
@@ -232,13 +253,13 @@ export default class App extends React.Component {
     }
 
     render () {
+        console.log(this.state.previewImageUrl)
         let res = this.state.Resource
         let inputs = res && res[this.state.current] && res[this.state.current].inputs? res[this.state.current].inputs:[]
         return(
             <div>
-                <img id="preview-image"/>
+                <img id="preview-image" src={this.state.previewImageUrl}/>
                 <canvas id="canvas" width="522" height="370" style={{display: 'none'}}>
-                    Sorry, your browser doesn't support the &lt;canvas&gt; element.
                 </canvas>
                 <button style={{background: 'transparent',width: '20%',height: '7%',position: 'absolute',left: '22%',top: '50%',border: 'none'}}>
                     <div style={{color: 'white', fontSize: '1.2rem'}}>{this.state.campaignDesignLoveCount}</div>
