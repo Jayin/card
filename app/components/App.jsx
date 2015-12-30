@@ -43,7 +43,10 @@ export default class App extends React.Component {
         let self = this;
         self.canvas = $('canvas')[0]
         self.ctx = self.canvas.getContext('2d')
-
+        console.log('=============')
+        console.log($('title'))
+        console.dir($('title'))
+        
         loadImage(DESIGN.Resource, DESIGN.allRequiredImages.length, function(newResource) {
             console.log('image load finish!');
             self.setState({
@@ -56,6 +59,9 @@ export default class App extends React.Component {
                 if(!urlobj.search.id){
                     console.log("no search.id...");
                     return
+                }
+                if(urlobj.search.name){
+                    $('title')[0].text = '朋友圈年度大奖得主：'+decodeURIComponent(urlobj.search.name)
                 }
                 //替换设计
                 // $('#preview-image')[0].src  = `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.jpg`
@@ -175,9 +181,11 @@ export default class App extends React.Component {
             $.ajax({
                 method: 'GET',
                 url: 'http://api.fenxiangbei.com:3000/?CampaignDesignId='+campaignDesign.id,
-                success: function(res){
-                    console.log('已创建图片:' + campaignDesign.id);
-                    window.location.href = 'index.html?id='+campaignDesign.id
+                success: function(response){
+                    console.log('已创建图片:' + response.id);
+                    console.log(response)
+                    let name = response.inputs[0]
+                    window.location.href = 'index.html?id='+campaignDesign.id+'&name='+encodeURIComponent(name)
                 },
                 error: function(){
                     alert('系统繁忙，请稍后再试!')
