@@ -65,8 +65,9 @@ export default class App extends React.Component {
                 }
                 //替换设计
                 // $('#preview-image')[0].src  = `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.jpg`
+                urlobj.search.type = urlobj.search.type || 'jpg' 
                 self.setState({
-                    previewImageUrl: `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.jpg`
+                    previewImageUrl: `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.${urlobj.search.type}`
                 })
                 //获取设计并渲染
                 // var query = new AV.Query(CampaignDesign);
@@ -170,22 +171,24 @@ export default class App extends React.Component {
             designId: item.id, //设计id
             inputs: item.inputs.map(function(input){ //输入新
                 return input.value
-            })
+            }),
+            type: item.url.indexOf('png') != -1 ? 'png' :'jpg'
         })
 
         campaignDesign.save(null, {
-          success: function(campaignDesign) {
+          success: function(savedCampaignDesign) {
             // 成功保存之后，执行其他逻辑.
-            console.log('New object created with objectId: ' + campaignDesign.id);
-            // window.location = 'index.html?id='+campaignDesign.id
+            console.log('New object created with objectId: ' + savedCampaignDesign.id);
+            // window.location = 'index.html?id='+savedCampaignDesign.id
             $.ajax({
                 method: 'GET',
-                url: 'http://api.fenxiangbei.com:3000/?CampaignDesignId='+campaignDesign.id,
+                url: 'http://api.fenxiangbei.com:3000/?CampaignDesignId='+savedCampaignDesign.id,
                 success: function(response){
                     console.log('已创建图片:' + response.id);
                     console.log(response)
                     let name = response.inputs[0]
-                    window.location.href = 'index.html?id='+campaignDesign.id+'&name='+encodeURIComponent(name)
+                    console.log('index.html?id='+savedCampaignDesign.id+'&name='+encodeURIComponent(name) + '&type='+response.type)
+                    window.location.href = 'index.html?id='+savedCampaignDesign.id+'&name='+encodeURIComponent(name) + '&type='+response.type
                 },
                 error: function(){
                     alert('系统繁忙，请稍后再试!')
