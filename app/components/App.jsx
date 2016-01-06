@@ -71,49 +71,12 @@ export default class App extends React.Component {
                 self.setState({
                     previewImageUrl: `http://cardcdn1.fenxiangbei.com/designs/${urlobj.search.id}.${urlobj.search.type}`
                 })
-                //获取设计并渲染
-                // var query = new AV.Query(CampaignDesign);
-                // query.get(urlobj.search.id, {
-                //   success: function(campaignDesign) {
-                //       console.log('query data:');
-                //       console.log(campaignDesign);
-                //     // 成功获得实例
-                //     // var content = post.get('content');
-                //     // var username = post.get('pubUser');
-                //     // var pubTimestamp = post.get('pubTimestamp');
-                //     //先异步获取数据
-                //     let data = {
-                //         id: urlobj.search.id,
-                //         designId: campaignDesign.get('designId'),
-                //         inputs: campaignDesign.get('inputs')
-                //     }
-                //     console.log(data);
-                //     //不需要的可以不加载
-                //     let res = DESIGN.Resource
-                //     for(let i=0;i<res[data.designId].inputs.length;i++){
-                //         res[data.designId].inputs[i].value = data.inputs[i]
-                //     }
-                //     self.setState({
-                //         current: data.designId, //update the design
-                //         Resource: res
-                //     }, function(){
-                //         self.updateDesign()
-                //     })
-
-                //   },
-                //   error: function(error) {
-                //     // 失败了.
-                //     alert('获取数据失败')
-                //   }
-                // })
-
 
             })
             //先显示，不要让用户等太久
             console.log('cdm');
             console.log(self.state.Resource);
             self.updateDesign()
-            // $('#preview-image')[0].src = self.canvas.toDataURL('image/png')
         })
 
         this.fetchCampaignDesignLoveCount()
