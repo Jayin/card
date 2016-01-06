@@ -1,6 +1,6 @@
-import React from 'react';
-import $ from 'jquery';
-require('./App.css');
+import React from 'react'
+import $ from 'jquery'
+require('./App.css')
 require('./normalize.css')
 let loadImage = require('../libs/loadImage')
 let DESIGN = require('../design')
@@ -52,7 +52,9 @@ export default class App extends React.Component {
             self.setState({
                 Resource: newResource
             }, function(){
-
+                //隐藏loading
+                $('.loader-inner').hide();
+                
                 var urlobj = urlparser(window.location.href)
                 console.log(urlobj);
                 //没有design
