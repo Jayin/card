@@ -15,7 +15,7 @@
     "avoscloud-sdk": "^0.6.7",
     "babel-runtime": "~6.2.0",
     "file-loader": "^0.8.5",
-    "jquery": "^2.1.4",
+    "jquery": "^3.0.0",
     "normalize.css": "^3.0.3",
     "react": "~0.14.3",
     "react-dom": "~0.14.3",
